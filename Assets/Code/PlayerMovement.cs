@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip shootSound;
 
+    public bool isMoving = false;
 
     float shootTime;
     bool keyShootRelease;
@@ -99,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     //Player Run Animation
+                    animator.SetBool("isMove", true);
                 }
             }
             rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
@@ -118,7 +120,8 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     //Player Run Animation
-                    
+                    animator.SetBool("isMove", true);
+
                 }
             }
             rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
@@ -158,6 +161,12 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             //animator.Play(Jump Animation)
+        }
+
+        if (!Input.anyKey)
+        {
+            isMoving = false;
+            animator.SetBool("isMove", false);
         }
     }
 
