@@ -118,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     //Player Run Animation
+                    
                 }
             }
             rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);

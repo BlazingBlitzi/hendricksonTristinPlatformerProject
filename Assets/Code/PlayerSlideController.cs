@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSlide : MonoBehaviour
+public class PlayerSlideController : MonoBehaviour
 {
 
     public bool isSliding = false;
@@ -22,19 +22,19 @@ public class PlayerSlide : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            preformSlide();
+            PreformSlide();
         }
     }
-    private void preformSlide()
+    private void PreformSlide()
     {
         isSliding = true;
 
-            anim.SetBool("PlayerSlide", true);
+        anim.SetBool("isSlide", true);
 
         regularColl.enabled = false;
         slideColl.enabled = true;
 
-        if (!PL.isFacingRight)
+        if (PL.isFacingRight)
         {
             rb2d.AddForce(Vector2.right * slideSpeed);
         }
@@ -43,14 +43,14 @@ public class PlayerSlide : MonoBehaviour
             rb2d.AddForce(Vector2.left * slideSpeed);
         }
 
-        StartCoroutine("stopSlide");
+        StartCoroutine("StopSlide");
     }
 
-    IEnumerator stopSlide()
+    IEnumerator StopSlide()
     {
         yield return new WaitForSeconds(0.0f);
-        anim.Play("Idle");
-        anim.SetBool("IsSlide", false);
+        anim.Play("PlayerIdle");
+        anim.SetBool("isSlide", false);
         regularColl.enabled = true;
         slideColl.enabled = false;
         isSliding = false;
