@@ -15,7 +15,11 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded;
     bool isShooting;
+    bool isTakingDamage;
+    bool isInvincible;
     public bool isFacingRight;
+
+    bool hitSideRight;
 
     public AudioClip shootSound;
 
@@ -24,8 +28,19 @@ public class PlayerMovement : MonoBehaviour
     float shootTime;
     bool keyShootRelease;
 
+    public int currentHealth;
+    public int maxHealth = 28;
+
     [SerializeField] float moveSpeed = 1.5f;
     [SerializeField] float jumpSpeed = 3.7f;
+
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 0.5f;
+    [SerializeField] private TrailRenderer tr;
+
 
     [SerializeField] int bulletDamage = 1;
     [SerializeField] float bulletSpeed = 5f;
@@ -41,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
         //Character Faces right be default
         isFacingRight = true;
+
+        currentHealth = maxHealth;
     }
 
     private void FixedUpdate()
@@ -73,11 +90,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isTakingDamage)
+        {
+            //animator.Play("Player_Hit");
+            return;
+        }
 
         PlayerDirectionInput();
         PlayerJumpInput();
         PlayerShootInput();
         PlayerController();
+        PlayerDashInput();
+
+        if (isDashing)
+        {
+            return;
+        }
         
     }
 
@@ -182,6 +210,14 @@ public class PlayerMovement : MonoBehaviour
         keyHorizontal = Input.GetAxisRaw("Horizontal");
     }
 
+    void PlayerDashInput()
+    {
+        if (Input.GetKeyDown(KeyCode.C) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+    }
+
     void PlayerShootInput()
     {
         float shootTimeLength;
@@ -230,5 +266,74 @@ public class PlayerMovement : MonoBehaviour
         bullet.GetComponent<PlayerBullet>().SetBulletSpeed(bulletSpeed);
         bullet.GetComponent<PlayerBullet>().SetBulletDirection((isFacingRight) ? Vector2.right : Vector2.left);
         bullet.GetComponent<PlayerBullet>().Shoot();
+    }
+
+    public void HitSide(bool rightSide)
+    {
+        hitSideRight = rightSide;
+    }
+
+    public void Invincible(bool invincibility)
+    {
+        isInvincible = invincibility;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (!isInvincible)
+        {
+            currentHealth -= damage;
+            Mathf.Clamp(currentHealth, 0, maxHealth);
+            if (currentHealth <= 0)
+            {
+                Defeat();
+            }
+            else
+            {
+                StartDamageAnimation();
+            }
+        }
+    }
+
+    void StartDamageAnimation()
+    {
+        if (!isTakingDamage)
+        {
+            isTakingDamage = true;
+            isInvincible = true;
+            float hitForceX = 0.50f;
+            float hitForceY = 1.5f;
+            if (hitSideRight) hitForceX = -hitForceX;
+            rb2d.velocity = Vector2.zero;
+            rb2d.AddForce(new Vector2(hitForceX, hitForceY), ForceMode2D.Impulse);
+        }
+    }
+
+    void StopDamageAnimation()
+    {
+        isTakingDamage = false;
+        isInvincible = false;
+        //animator.Play("Player_Hit", -1, 0f);
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb2d.gravityScale;
+        rb2d.gravityScale = 0f;
+        rb2d.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb2d.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+    }
+
+    void Defeat()
+    {
+        Destroy(gameObject);
     }
 }
