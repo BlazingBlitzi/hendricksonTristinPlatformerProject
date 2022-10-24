@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     public int currentHealth;
     public int maxHealth = 28;
+    public TextAlignment lifeText;
+    public int lives;
 
     [SerializeField] float moveSpeed = 1.5f;
     [SerializeField] float jumpSpeed = 3.7f;
@@ -92,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isTakingDamage)
         {
-            //animator.Play("Player_Hit");
+            animator.Play("Player_Hit");
             return;
         }
 
@@ -107,6 +110,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         
+        /*if (lives == 0)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }*/
+
     }
 
     
@@ -284,6 +292,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
+            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
             if (currentHealth <= 0)
             {
                 Defeat();
@@ -313,7 +322,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isTakingDamage = false;
         isInvincible = false;
-        //animator.Play("Player_Hit", -1, 0f);
+        animator.Play("Player_Hit", -1, 0f);
     }
 
     private IEnumerator Dash()
@@ -336,4 +345,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    
+    
 }
