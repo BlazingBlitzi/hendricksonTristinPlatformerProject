@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+
     public void Invincible(bool invincibility)
     {
         isInvincible = invincibility;

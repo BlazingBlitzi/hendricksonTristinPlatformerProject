@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     public int currentHealth;
     public int maxHealth = 28;
-    public TextAlignment lifeText;
+    //public TextAlignment lifeText;
     public int lives;
 
     [SerializeField] float moveSpeed = 1.5f;
