@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
+    Animator animator;
     Rigidbody2D rb2d;
     SpriteRenderer sprite;
 
@@ -19,6 +20,7 @@ public class PlayerBullet : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
     }

@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     Animator animator;
-    Rigidbody2D rb2d;
+    [SerializeField] private Rigidbody2D rb2d;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
     BoxCollider2D box2d;
     
 
@@ -39,9 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.5f;
+    public float dashingPower = 24f;
+    public float dashingTime = 0.2f;
+    public float dashingCooldown = 1f;
     [SerializeField] private TrailRenderer tr;
 
 
@@ -65,11 +67,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         isGrounded = false;
         Color raycastColor;
         RaycastHit2D raycastHit;
         float raycastDistance = 0.5f;
-        int layerMask = 1 << LayerMask.NameToLayer("Platforms");
+        int layerMask = 1 << LayerMask.NameToLayer("Ground");
 
         //Ground Check
         Vector3 box_origin = box2d.bounds.center;
@@ -89,6 +96,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(box_origin - new Vector3(box2d.bounds.extents.x, 0), Vector2.down * (box2d.bounds.extents.y / 4f + raycastDistance), raycastColor);
         Debug.DrawRay(box_origin - new Vector3(box2d.bounds.extents.x, box2d.bounds.extents.y / 4f + raycastDistance), Vector2.right * (box2d.bounds.extents.x * 2), raycastColor);
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -261,10 +270,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Flip()
+    /*void Flip()
     {
+        
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
+    }*/
+
+    private void Flip()
+    {
+        if (isFacingRight && keyHorizontal < 0f || !isFacingRight && keyHorizontal > 0f)
+        {
+            {
+                Vector3 localScale = transform.localScale;
+                isFacingRight = !isFacingRight;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
+
+        }
     }
 
     void ShootBullet()
@@ -341,7 +365,7 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-    void Defeat()
+    public void Defeat()
     {
         Destroy(gameObject);
     }

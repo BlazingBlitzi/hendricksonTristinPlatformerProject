@@ -9,6 +9,8 @@ public class UIHealthBar : MonoBehaviour
     float originalSize;
 
     public static UIHealthBar instance { get; private set; }
+
+
     // Start is called before the first frame update
     void Awake()
     {
