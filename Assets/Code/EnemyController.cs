@@ -6,6 +6,11 @@ public class EnemyController : MonoBehaviour
 {
     bool isInvincible;
 
+    public float Range;
+    public Transform Target;
+    //bool Detected = false;
+    //Vector2 Direction;
+
     public AudioClip defeatSound;
 
     public int currentHealth;
@@ -17,6 +22,12 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
+
+
+    void Update()
+    {
+
+    }    
 
 
     public void Invincible(bool invincibility)
@@ -52,5 +63,11 @@ public class EnemyController : MonoBehaviour
             player.TakeDamage(this.contactDamage);
             Debug.Log("Player Hit");
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, Range);
+
     }
 }
