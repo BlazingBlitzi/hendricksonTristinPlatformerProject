@@ -6,8 +6,6 @@ public class EnemyController : MonoBehaviour
 {
     bool isInvincible;
 
-    private float disToTarget;
-
     public CannonScript MyCannon;
 
     public float range;

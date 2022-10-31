@@ -7,10 +7,7 @@ public class CrateBehaviour : MonoBehaviour
     bool isInvincible;
 
 
-    public float range;
-    public Transform target;
-
-
+    public AudioClip defeatSound;
 
     public int currentHealth;
     public int maxHealth = 1;
@@ -52,21 +49,18 @@ public class CrateBehaviour : MonoBehaviour
 
     void Defeat()
     {
-
+        AudioSource.PlayClipAtPoint(defeatSound, Camera.main.transform.position);
         Destroy(gameObject);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
-            player.HitSide(transform.position.x > player.transform.position.x);
-            
-            Debug.Log("Player Hit");
+            Defeat();
         }
     }
-
-
-
 }
