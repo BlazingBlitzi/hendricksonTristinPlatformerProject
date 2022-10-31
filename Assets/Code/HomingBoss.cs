@@ -27,7 +27,7 @@ public class HomingBoss : MonoBehaviour
 
         rb2d.angularVelocity = -rotateAmount * rotateSpeed;
 
-        rb2d.velocity = transform.right * speed;   
+        rb2d.velocity = transform.right * speed * direction;   
     }
 
     // Update is called once per frame

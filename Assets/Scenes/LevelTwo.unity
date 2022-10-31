@@ -2167,6 +2167,10 @@ PrefabInstance:
       propertyPath: speed
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7063715071763053296, guid: a65c9af96cb41c445becbb0dc97e6c36, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8323266299309644272, guid: a65c9af96cb41c445becbb0dc97e6c36, type: 3}
       propertyPath: m_Name
       value: TestFlyingEnemySprite 1

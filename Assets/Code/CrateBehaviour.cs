@@ -2,20 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrateController : MonoBehaviour
+public class CrateBehaviour : MonoBehaviour
 {
     bool isInvincible;
 
-    
+
+    public float range;
+    public Transform target;
+
+
 
     public int currentHealth;
     public int maxHealth = 1;
-    public int contactDamage = 1;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+
+
+    }
+
+
+    void Update()
+    {
+
+
     }
 
 
@@ -26,11 +39,11 @@ public class CrateController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(!isInvincible)
+        if (!isInvincible)
         {
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
-            if(currentHealth <= 0)
+            if (currentHealth <= 0)
             {
                 Defeat();
             }
@@ -39,7 +52,7 @@ public class CrateController : MonoBehaviour
 
     void Defeat()
     {
-        
+
         Destroy(gameObject);
     }
 
@@ -49,8 +62,11 @@ public class CrateController : MonoBehaviour
         {
             PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
             player.HitSide(transform.position.x > player.transform.position.x);
-            player.TakeDamage(this.contactDamage);
+            
             Debug.Log("Player Hit");
         }
     }
+
+
+
 }

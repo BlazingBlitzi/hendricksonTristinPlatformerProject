@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 5472159994952176455}
   - component: {fileID: 5595742709892589044}
   - component: {fileID: 2333159056347521766}
-  - component: {fileID: 3218776148007336916}
   - component: {fileID: 746309792178036302}
   - component: {fileID: 7530747686928643944}
+  - component: {fileID: -7861944654143575798}
   m_Layer: 0
   m_Name: SpikeBottom
   m_TagString: Untagged
@@ -185,21 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f60dba3aa5c8e4aabc820c573cc8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3218776148007336916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3370340632062351294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a3d0b186f7ec34459d16353688142c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 99999
-  maxHealth: 99999
-  contactDamage: 28
 --- !u!50 &746309792178036302
 Rigidbody2D:
   serializedVersion: 4
@@ -251,3 +236,20 @@ PolygonCollider2D:
       - {x: -0.32, y: -0.64}
       - {x: 0.32, y: -0.64}
       - {x: 0.32, y: -0.55}
+--- !u!114 &-7861944654143575798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3370340632062351294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed98d3487778204a9c4442a5004d233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 0
+  target: {fileID: 0}
+  currentHealth: 0
+  maxHealth: 99999
+  contactDamage: 5

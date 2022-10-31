@@ -8,6 +8,8 @@ public class CannonScript : MonoBehaviour
     public GameObject bullet;
     float timeBetween;
     public float startTimeBetween;
+
+    public bool canSeePlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,14 +19,19 @@ public class CannonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timeBetween <= 0)
+        
+
+        if (canSeePlayer)
         {
-            Instantiate(bullet, firepoint.position, firepoint.rotation);
-            timeBetween = startTimeBetween;
-        }
-        else
-        {
-            timeBetween -= Time.deltaTime;
+            if (timeBetween <= 0)
+            {
+                Instantiate(bullet, firepoint.position, firepoint.rotation);
+                timeBetween = startTimeBetween;
+            }
+            else
+            {
+                timeBetween -= Time.deltaTime;
+            }
         }
     }
 }
