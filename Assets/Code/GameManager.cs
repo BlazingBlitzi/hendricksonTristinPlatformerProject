@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-    public int Lives;
+    public static GameManager Instance;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         if (Instance == null)
@@ -21,9 +25,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
+    
+
+
+
+
+
+
+
+
+
 }

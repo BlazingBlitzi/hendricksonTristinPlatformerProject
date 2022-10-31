@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1155590559752842348}
   m_Layer: 10
   m_Name: EnemyBullet
-  m_TagString: Enemy
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3d0b186f7ec34459d16353688142c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defeatSound: {fileID: 0}
   currentHealth: 0
   maxHealth: 1
   contactDamage: 1
