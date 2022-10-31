@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 9157894370822439220}
   - component: {fileID: 6515230337156532952}
   - component: {fileID: -1830295995975872975}
-  - component: {fileID: 7129986741959176962}
   - component: {fileID: -4519438620248338642}
-  m_Layer: 0
+  - component: {fileID: 2875194069840101647}
+  m_Layer: 11
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -482211329
   m_SortingLayer: 2
-  m_SortingOrder: 10
+  m_SortingOrder: 250
   m_Sprite: {fileID: 21300000, guid: e31015b3c195cdf428e8c907c76839d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -102,8 +102,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 7.5, y: 7.5}
-  m_Direction: 0
+  m_Size: {x: 7.16, y: 2.21}
+  m_Direction: 1
 --- !u!50 &-1830295995975872975
 Rigidbody2D:
   serializedVersion: 4
@@ -123,24 +123,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7129986741959176962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5697784080822309580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a61444df92fcc114dad41d2c9fc26c3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  bulletSpeed: 5
-  bulletDirection: {x: 1, y: 0}
-  destroyDelay: 2
 --- !u!95 &-4519438620248338642
 Animator:
   serializedVersion: 4
@@ -161,3 +145,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2875194069840101647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697784080822309580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a61444df92fcc114dad41d2c9fc26c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  bulletSpeed: 5
+  bulletDirection: {x: 0, y: 0}
+  destroyDelay: 1.5

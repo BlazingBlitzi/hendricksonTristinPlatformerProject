@@ -2,61 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     Animator animator;
-    [SerializeField] private Rigidbody2D rb2d;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
+
+
+    //Movement
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpingPower = 10f;
+    private bool isFacingRight = true;
     BoxCollider2D box2d;
-    
 
-    float keyHorizontal;
-    bool keyJump;
-    bool keyShoot;
 
-    bool isGrounded;
-    bool isShooting;
-    bool isTakingDamage;
-    bool isInvincible;
-    public bool isFacingRight;
-
-    bool hitSideRight;
-
-    public AudioClip shootSound;
-
-    public bool isMoving = false;
-
-    float shootTime;
-    bool keyShootRelease;
-
-    public int currentHealth;
-    public int maxHealth = 28;
-    //public TextAlignment lifeText;
-    public int lives;
-
-    [SerializeField] float moveSpeed = 1.5f;
-    [SerializeField] float jumpSpeed = 3.7f;
-
+    //Dashing
     private bool canDash = true;
     private bool isDashing;
-    public float dashingPower = 24f;
-    public float dashingTime = 0.2f;
-    public float dashingCooldown = 1f;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
 
+
+    //Shooting
+    bool keyShoot;
+    bool isShooting;
+    bool keyShootRelease;
+    float shootTime;
+
+    //Audio
+    AudioSource audioSource;
+    public AudioClip shootSound;
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
 
     [SerializeField] int bulletDamage = 1;
     [SerializeField] float bulletSpeed = 5f;
     [SerializeField] Transform bulletShootPos;
     [SerializeField] GameObject bulletPrefab;
 
-    // Start is called before the first frame update
+    //Health
+    public int currentHealth;
+    public int maxHealth = 28;
+
+    //Damage
+    bool isTakingDamage;
+    bool isInvincible;
+    bool hitSideRight;
+
     void Start()
     {
         box2d = GetComponent<BoxCollider2D>();
-        rb2d = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
         //Character Faces right be default
@@ -65,42 +69,7 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void FixedUpdate()
-    {
-        if (isDashing)
-        {
-            return;
-        }
-
-        isGrounded = false;
-        Color raycastColor;
-        RaycastHit2D raycastHit;
-        float raycastDistance = 0.5f;
-        int layerMask = 1 << LayerMask.NameToLayer("Ground");
-
-        //Ground Check
-        Vector3 box_origin = box2d.bounds.center;
-        box_origin.y = box2d.bounds.min.y + (box2d.bounds.extents.y / 4f);
-        Vector3 box_size = box2d.bounds.size;
-        box_size.y = box2d.bounds.size.y / 4f;
-        raycastHit = Physics2D.BoxCast(box_origin, box_size, 0f, Vector2.down, raycastDistance, layerMask);
-
-        // Player Box touching the Ground
-        if (raycastHit.collider != null)
-        {
-            isGrounded = true;
-        }
-        // Debug Lines
-        raycastColor = (isGrounded) ? Color.green : Color.red;
-        Debug.DrawRay(box_origin + new Vector3(box2d.bounds.extents.x, 0), Vector2.down * (box2d.bounds.extents.y / 4f + raycastDistance), raycastColor);
-        Debug.DrawRay(box_origin - new Vector3(box2d.bounds.extents.x, 0), Vector2.down * (box2d.bounds.extents.y / 4f + raycastDistance), raycastColor);
-        Debug.DrawRay(box_origin - new Vector3(box2d.bounds.extents.x, box2d.bounds.extents.y / 4f + raycastDistance), Vector2.right * (box2d.bounds.extents.x * 2), raycastColor);
-    }
-
-    
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isTakingDamage)
         {
@@ -108,131 +77,48 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        PlayerDirectionInput();
-        PlayerJumpInput();
-        PlayerShootInput();
-        PlayerController();
-        PlayerDashInput();
 
         if (isDashing)
         {
             return;
         }
-        
-        /*if (lives == 0)
+
+        horizontal = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-        }*/
-
-    }
-
-    
-
-    void PlayerController()
-    {
-        if (keyHorizontal < 0)
-        {
-            if (isFacingRight)
-            {
-                Flip();
-            }
-            if (isGrounded)
-            {
-                if (isShooting)
-                {
-                    //Player_RunShoot Animation
-                }
-                else
-                {
-                    //Player Run Animation
-                    animator.SetBool("isMove", true);
-                }
-            }
-            rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
-        }
-        else if (keyHorizontal > 0)
-        {
-            if (!isFacingRight)
-            {
-                Flip();
-            }
-            if (isGrounded)
-            {
-                if (isShooting)
-                {
-                    //Player_RunShoot Animation
-                }
-                else
-                {
-                    //Player Run Animation
-                    animator.SetBool("isMove", true);
-
-                }
-            }
-            rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
-        }
-        else
-        {
-            if (isGrounded)
-            {
-                if (isShooting)
-                {
-                    animator.Play("PlayerShoot");
-                }
-                else
-                {
-                    animator.Play("PlayerIdle");
-                }
-
-            }
-            rb2d.velocity = new Vector2(0f, rb2d.velocity.y);
+            AudioSource.PlayClipAtPoint(jumpSound, Camera.main.transform.position);
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-
-        if (keyJump && isGrounded)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
-            if (isShooting)
-            {
-                //animator.Play(Player Jump_Shoot)
-            }
-            else
-            {
-                //animator.Play(Player.Jump)
-            }
-            
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        if (!isGrounded)
-        {
-            //animator.Play(Jump Animation)
-        }
-
-        if (!Input.anyKey)
-        {
-            isMoving = false;
-            animator.SetBool("isMove", false);
-        }
-    }
-
-    void PlayerJumpInput()
-    {
-        //Jump Key
-        keyJump = Input.GetKeyDown(KeyCode.Z);
-    }
-
-    void PlayerDirectionInput()
-    {
-        //Directional Keys
-        keyHorizontal = Input.GetAxisRaw("Horizontal");
-    }
-
-    void PlayerDashInput()
-    {
         if (Input.GetKeyDown(KeyCode.C) && canDash)
         {
+            AudioSource.PlayClipAtPoint(dashSound, Camera.main.transform.position);
             StartCoroutine(Dash());
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+
+
+
+
+        Flip();
+
+        PlayerShootInput();
     }
 
     void PlayerShootInput()
@@ -242,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Shoot Key
         keyShoot = Input.GetKey(KeyCode.X);
-        
+
 
         if (keyShoot && keyShootRelease)
         {
@@ -270,34 +156,59 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /*void Flip()
+    private void FixedUpdate()
     {
-        
-        isFacingRight = !isFacingRight;
-        transform.Rotate(0f, 180f, 0f);
-    }*/
+        if (isDashing)
+        {
+            return;
+        }
+
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
 
     private void Flip()
     {
-        if (isFacingRight && keyHorizontal < 0f || !isFacingRight && keyHorizontal > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
-            {
-                Vector3 localScale = transform.localScale;
-                isFacingRight = !isFacingRight;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
-            }
-
+            Vector3 localScale = transform.localScale;
+            isFacingRight = !isFacingRight;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        isInvincible = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        isInvincible = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 
     void ShootBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletShootPos.position, Quaternion.identity);
-        bullet.GetComponent<PlayerBullet>().SetDamageValue(bulletDamage);
-        bullet.GetComponent<PlayerBullet>().SetBulletSpeed(bulletSpeed);
-        bullet.GetComponent<PlayerBullet>().SetBulletDirection((isFacingRight) ? Vector2.right : Vector2.left);
-        bullet.GetComponent<PlayerBullet>().Shoot();
+        bullet.GetComponent<Bullet>().SetDamageValue(bulletDamage);
+        bullet.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
+        bullet.GetComponent<Bullet>().SetBulletDirection((isFacingRight) ? Vector2.right : Vector2.left);
+        bullet.GetComponent<Bullet>().Shoot();
     }
 
     public void HitSide(bool rightSide)
@@ -337,8 +248,8 @@ public class PlayerMovement : MonoBehaviour
             float hitForceX = 0.50f;
             float hitForceY = 1.5f;
             if (hitSideRight) hitForceX = -hitForceX;
-            rb2d.velocity = Vector2.zero;
-            rb2d.AddForce(new Vector2(hitForceX, hitForceY), ForceMode2D.Impulse);
+            rb.velocity = Vector2.zero;
+            rb.AddForce(new Vector2(hitForceX, hitForceY), ForceMode2D.Impulse);
         }
     }
 
@@ -349,27 +260,8 @@ public class PlayerMovement : MonoBehaviour
         animator.Play("Player_Hit", -1, 0f);
     }
 
-    private IEnumerator Dash()
-    {
-        canDash = false;
-        isDashing = true;
-        float originalGravity = rb2d.gravityScale;
-        rb2d.gravityScale = 0f;
-        rb2d.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        tr.emitting = true;
-        yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
-        rb2d.gravityScale = originalGravity;
-        isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
-    }
-
     public void Defeat()
     {
         Destroy(gameObject);
     }
-
-    
-    
 }

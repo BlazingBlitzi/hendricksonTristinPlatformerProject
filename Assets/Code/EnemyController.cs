@@ -6,6 +6,8 @@ public class EnemyController : MonoBehaviour
 {
     bool isInvincible;
 
+    public AudioClip defeatSound;
+
     public int currentHealth;
     public int maxHealth = 1;
     public int contactDamage = 1;
@@ -37,6 +39,7 @@ public class EnemyController : MonoBehaviour
 
     void Defeat()
     {
+        AudioSource.PlayClipAtPoint(defeatSound, Camera.main.transform.position);
         Destroy(gameObject);
     }
 
