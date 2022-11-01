@@ -135,6 +135,7 @@ MonoBehaviour:
   firepoint: {fileID: 4633713421563259033}
   bullet: {fileID: 4474559965603477669, guid: 544f4ec87e603434f9c92bf943ed86c4, type: 3}
   startTimeBetween: 5
+  canSeePlayer: 0
 --- !u!60 &4633713421761706730
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -208,6 +209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3d0b186f7ec34459d16353688142c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyCannon: {fileID: 4633713421761706734}
+  range: 0
+  target: {fileID: 5233241093112242099, guid: abe682f5737e49940b09ae5c23bc5dc6, type: 3}
+  defeatSound: {fileID: 8300000, guid: 72d4c880fab67dc43a07d787efce8b5e, type: 3}
   currentHealth: 0
   maxHealth: 5
   contactDamage: 1

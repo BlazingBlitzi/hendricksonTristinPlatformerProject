@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyBulletController : MonoBehaviour
 {
     bool isInvincible;
-
-    public CannonScript MyCannon;
-
-    public float range;
-    public Transform target;
-    
-    public AudioClip defeatSound;
-
     public int currentHealth;
     public int maxHealth = 1;
     public int contactDamage = 1;
@@ -22,23 +14,12 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-        MyCannon = GetComponent<CannonScript>();
-
-        
     }
 
 
     void Update()
     {
-        
-        if (Vector2.Distance(transform.position, target.position) < range)
-        {
-            MyCannon.canSeePlayer = true;
-        }
-        else
-        {
-            MyCannon.canSeePlayer = false;
-        }
+
     }    
 
 
@@ -62,7 +43,7 @@ public class EnemyController : MonoBehaviour
 
     void Defeat()
     {
-        AudioSource.PlayClipAtPoint(defeatSound, Camera.main.transform.position);
+        
         Destroy(gameObject);
     }
 
@@ -77,10 +58,5 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, range);
-
-    }
-
+    
 }
