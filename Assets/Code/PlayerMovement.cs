@@ -264,4 +264,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if(coll.gameObject.tag == "Elevator")
+        {
+            transform.parent = coll.gameObject.transform;
+        }
+    }
 }
