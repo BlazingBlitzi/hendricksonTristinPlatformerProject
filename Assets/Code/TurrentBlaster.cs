@@ -5,13 +5,28 @@ using UnityEngine;
 public class TurrentBlaster : MonoBehaviour
 {
     public float Range;
+
     public Transform Target;
+
     bool Detected = false;
+
     Vector2 Direction;
 
     public GameObject AlarmLight;
 
     public GameObject Gun;
+
+    public GameObject Bullet;
+
+    public float FireRate;
+
+    float nextTimetoFire = 0;
+
+    public Transform ShootPoint;
+
+    public float Force;
+
+    public AudioClip ShootSound;
 
     // Start is called before the first frame update
     void Start()
@@ -51,9 +66,20 @@ public class TurrentBlaster : MonoBehaviour
         if(Detected)
         {
             Gun.transform.up = Direction;
+            if(Time.time > nextTimetoFire)
+            {
+                nextTimetoFire = Time.time + 1 / FireRate;
+                AudioSource.PlayClipAtPoint(ShootSound, Camera.main.transform.position);
+                shoot();
+            }
         }
     }
 
+    void shoot()
+    {
+        GameObject BulletIns = Instantiate(Bullet, ShootPoint.position, Quaternion.identity);
+        BulletIns.GetComponent<Rigidbody2D>().AddForce(Direction * Force);
+    }
 
 
     void OnDrawGizmosSelected()
