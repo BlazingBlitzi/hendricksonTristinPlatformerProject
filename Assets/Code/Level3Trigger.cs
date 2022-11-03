@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Level2Trigger : MonoBehaviour
+public class Level3Trigger : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,12 +17,8 @@ public class Level2Trigger : MonoBehaviour
         
     }
 
-    void OnTriggerEnter2D(Collider2D target)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (target.tag == "Player")
-        {
-            SceneManager.LoadScene(2);
-        }
-        
+        SceneManager.LoadScene(3);
     }
 }

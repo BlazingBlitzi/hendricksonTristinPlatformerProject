@@ -51,6 +51,9 @@ public class PlayerMovement : MonoBehaviour
     //Health
     public int currentHealth;
     public int maxHealth = 28;
+    public Text lifeText;
+    public int lives;
+    public Vector3 respawnPoint;
 
     //Damage
     bool isTakingDamage;
@@ -62,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         box2d = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        respawnPoint = transform.position;
 
         //Character Faces right be default
         isFacingRight = true;
@@ -112,6 +116,10 @@ public class PlayerMovement : MonoBehaviour
             Application.Quit();
         }
 
+        if (lives == 0)
+        {
+            SceneManager.LoadScene(1);
+        }
 
 
 
@@ -119,6 +127,14 @@ public class PlayerMovement : MonoBehaviour
         Flip();
 
         PlayerShootInput();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "RespawnPoint")
+        {
+            respawnPoint = transform.position;
+        }
     }
 
     void PlayerShootInput()
@@ -223,19 +239,30 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        
+
         if (!isInvincible)
         {
-            currentHealth -= damage;
-            Mathf.Clamp(currentHealth, 0, maxHealth);
-            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+            
+            print("hp: " + currentHealth);
             if (currentHealth <= 0)
             {
-                Defeat();
+                transform.position = respawnPoint;
+                print("hp: " + currentHealth);
+                currentHealth = maxHealth;
+                print("hp: " + currentHealth);
+                LoseALife();
+                
             }
             else
             {
+                currentHealth -= damage;
+                currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
                 StartDamageAnimation();
             }
+            
+            print("hp: " + currentHealth);
+            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
         }
     }
 
@@ -271,5 +298,12 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.parent = coll.gameObject.transform;
         }
+    }
+
+    public void LoseALife()
+    {
+        lives -= 1;
+        lifeText.text = ": 0" + lives.ToString();
+        Debug.Log("Fucking LE GOOB");
     }
 }

@@ -2,37 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class HomingBoss : MonoBehaviour
 {
-    public Transform target;
+    public float speed;
+    private GameObject player;
+    public bool chase = false;
+    public Transform startingPoint;
 
-    public float speed = 5f;
-
-    public float rotateSpeed = 200f;
-
-    private Rigidbody2D rb2d;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void FixedUpdate()
-    {
-        Vector2 direction = (Vector2)target.position - rb2d.position;
-
-        direction.Normalize();
-
-        float rotateAmount = Vector3.Cross(direction, transform.up).z;
-
-        rb2d.angularVelocity = -rotateAmount * rotateSpeed;
-
-        rb2d.velocity = transform.right * speed * direction;   
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (player == null)
+        {
+            return;
+        }
+        if (chase == true)
+        {
+            Chase();
+        }
+        else
+
+        Flip();
+    }
+
+    private void Chase()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+    }
+
+    /*private void ReturnStartPoint()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, startingPoint.position, speed * Time.deltaTime);
+    }*/
+
+    private void Flip()
+    {
+        if (transform.position.x > player.transform.position.x)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+            
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+            
     }
 }

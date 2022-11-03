@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBulletController : MonoBehaviour
+public class FlyingBossController : MonoBehaviour
 {
     bool isInvincible;
+    public Transform Player;
+
+    public AudioClip defeatSound;
+
     public int currentHealth;
     public int maxHealth = 1;
     public int contactDamage = 1;
@@ -14,13 +18,15 @@ public class EnemyBulletController : MonoBehaviour
     {
         currentHealth = maxHealth;
 
+
     }
 
 
     void Update()
     {
 
-    }    
+        
+    }
 
 
     public void Invincible(bool invincibility)
@@ -30,11 +36,11 @@ public class EnemyBulletController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(!isInvincible)
+        if (!isInvincible)
         {
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
-            if(currentHealth <= 0)
+            if (currentHealth <= 0)
             {
                 Defeat();
             }
@@ -43,7 +49,7 @@ public class EnemyBulletController : MonoBehaviour
 
     void Defeat()
     {
-        
+        AudioSource.PlayClipAtPoint(defeatSound, Camera.main.transform.position);
         Destroy(gameObject);
     }
 
@@ -58,8 +64,5 @@ public class EnemyBulletController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Destroy(gameObject);
-    }
+
 }

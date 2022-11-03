@@ -53,7 +53,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4474559965603477669, guid: fc6aeebdc454da449a5ef2cdebf7dfa7, type: 3}
       propertyPath: m_Name
-      value: TestFlyingEnemySprite 1
+      value: Boss
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4894622866548924941, guid: fc6aeebdc454da449a5ef2cdebf7dfa7, type: 3}
+    - {fileID: 1155590559752842348, guid: fc6aeebdc454da449a5ef2cdebf7dfa7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fc6aeebdc454da449a5ef2cdebf7dfa7, type: 3}
+--- !u!1 &8323266299309644272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4474559965603477669, guid: fc6aeebdc454da449a5ef2cdebf7dfa7, type: 3}
+  m_PrefabInstance: {fileID: 5592056821590155605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2719906541603356359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323266299309644272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937080e7cf299354299525240fd31370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  defeatSound: {fileID: 0}
+  currentHealth: 0
+  maxHealth: 1
+  contactDamage: 1

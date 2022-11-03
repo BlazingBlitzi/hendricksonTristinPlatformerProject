@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Bullet
+  - Elevator
+  - Ladder
+  - RespawnPoint
   layers:
   - Default
   - TransparentFX
