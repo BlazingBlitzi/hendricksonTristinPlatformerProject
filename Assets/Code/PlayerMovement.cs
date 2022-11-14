@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     public Text lifeText;
     public int lives;
     public Vector3 respawnPoint;
+    public HealthBar healthBar;
 
     //Damage
     bool isTakingDamage;
@@ -71,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         isFacingRight = true;
 
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     private void Update()
@@ -243,14 +245,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isInvincible)
         {
-            
-            print("hp: " + currentHealth);
+            healthBar.SetHealth(currentHealth);
+           
             if (currentHealth <= 0)
             {
                 transform.position = respawnPoint;
-                print("hp: " + currentHealth);
+                
                 currentHealth = maxHealth;
-                print("hp: " + currentHealth);
+                
                 LoseALife();
                 
             }
@@ -261,8 +263,7 @@ public class PlayerMovement : MonoBehaviour
                 StartDamageAnimation();
             }
             
-            print("hp: " + currentHealth);
-            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+            
         }
     }
 
@@ -304,6 +305,6 @@ public class PlayerMovement : MonoBehaviour
     {
         lives -= 1;
         lifeText.text = ": 0" + lives.ToString();
-        Debug.Log("Fucking LE GOOB");
+        
     }
 }

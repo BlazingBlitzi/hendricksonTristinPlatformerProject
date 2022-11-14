@@ -11,7 +11,7 @@ public class FlyingBossController : MonoBehaviour
 
     public int currentHealth;
     public int maxHealth = 1;
-    public int contactDamage = 1;
+    public int contactDamage = 28;
 
     // Start is called before the first frame update
     void Start()

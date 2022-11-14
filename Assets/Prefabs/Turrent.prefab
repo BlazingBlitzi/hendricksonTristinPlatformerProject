@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8098145027717134680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07970229, y: -0.099999905, z: -1.6863126}
+  m_LocalPosition: {x: 0.102, y: -0.099999905, z: -1.6863126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 760335473
+  m_SortingLayer: 3
   m_SortingOrder: 250
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 1, b: 0.12042332, a: 1}
@@ -131,6 +131,7 @@ MonoBehaviour:
   firepoint: {fileID: 8098145027807881384}
   bullet: {fileID: 4474559965603477669, guid: 544f4ec87e603434f9c92bf943ed86c4, type: 3}
   startTimeBetween: 3
+  canSeePlayer: 0
 --- !u!1 &8098145027918473182
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,3 +352,8 @@ MonoBehaviour:
   Target: {fileID: 0}
   AlarmLight: {fileID: 8098145027717134680}
   Gun: {fileID: 8098145027918473182}
+  Bullet: {fileID: 0}
+  FireRate: 0
+  ShootPoint: {fileID: 0}
+  Force: 0
+  ShootSound: {fileID: 0}
