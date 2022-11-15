@@ -8,6 +8,14 @@ public class EnemyBulletController : MonoBehaviour
     public int currentHealth;
     public int maxHealth = 1;
     public int contactDamage = 1;
+    SpriteRenderer sprite;
+    Rigidbody2D rb2d;
+
+    float destroyTime;
+
+    [SerializeField] float destroyDelay;
+    [SerializeField] Vector2 bulletDirection;
+    [SerializeField] float bulletSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +27,17 @@ public class EnemyBulletController : MonoBehaviour
 
     void Update()
     {
+        destroyTime -= Time.deltaTime;
+        if (destroyTime <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    }    
-
+    public void SetDestoryDelay(float delay)
+    {
+        this.destroyDelay = delay;
+    }
 
     public void Invincible(bool invincibility)
     {
@@ -39,6 +55,13 @@ public class EnemyBulletController : MonoBehaviour
                 Defeat();
             }
         }
+    }
+
+    public void Shoot()
+    {
+        sprite.flipX = (bulletDirection.x < 0);
+        rb2d.velocity = bulletDirection * bulletSpeed;
+        destroyTime = destroyDelay;
     }
 
     void Defeat()
