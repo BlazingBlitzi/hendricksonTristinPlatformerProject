@@ -6,9 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     bool isInvincible;
 
-    public CannonScript MyCannon;
-
-    public float range;
+    
     public Transform target;
     
     public AudioClip defeatSound;
@@ -22,7 +20,7 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-        MyCannon = GetComponent<CannonScript>();
+        
 
         
     }
@@ -31,14 +29,14 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         
-        if (Vector2.Distance(transform.position, target.position) < range)
+        /*if (Vector2.Distance(transform.position, target.position) < range)
         {
             MyCannon.canSeePlayer = true;
         }
         else
         {
             MyCannon.canSeePlayer = false;
-        }
+        }*/
     }    
 
 
@@ -77,10 +75,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, range);
-
-    }
+    
 
 }

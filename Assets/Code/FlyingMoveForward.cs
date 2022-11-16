@@ -10,6 +10,6 @@ public class FlyingMoveForward : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        rb2d.velocity = transform.right * speed;
+        rb2d.velocity = Vector2.right * speed;
     }
 }

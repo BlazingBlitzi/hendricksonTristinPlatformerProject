@@ -9,6 +9,8 @@ TagManager:
   - Elevator
   - Ladder
   - RespawnPoint
+  - Health
+  - Box
   layers:
   - Default
   - TransparentFX
