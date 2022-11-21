@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     bool isInvincible;
 
     
-    public Transform target;
+    
     
     public AudioClip defeatSound;
 

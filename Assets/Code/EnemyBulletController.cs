@@ -8,14 +8,31 @@ public class EnemyBulletController : MonoBehaviour
     public float dieTime, damage;
     //public GameObject dieEFFECT;
 
+    public int damage = 1;
+
     void Start()
     {
         StartCoroutine(CountDownTimer());
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        Die();
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.TakeDamage(this.damage);
+            }
+            Destroy(gameObject, 0.01f);
+        }
+        
+    }
+
+    public void SetDamageValue(int damage)
+    {
+        this.damage = damage;
     }
 
     IEnumerator CountDownTimer()
