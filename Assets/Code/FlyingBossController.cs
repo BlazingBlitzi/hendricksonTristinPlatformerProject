@@ -53,7 +53,7 @@ public class FlyingBossController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnCollision2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -61,6 +61,7 @@ public class FlyingBossController : MonoBehaviour
             player.HitSide(transform.position.x > player.transform.position.x);
             player.TakeDamage(this.contactDamage);
             Debug.Log("Player Hit");
+            
         }
     }
 
