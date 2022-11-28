@@ -73,7 +73,7 @@ public class Bullet : MonoBehaviour
             }
             Destroy(gameObject, 0.01f);
         }
-        
+
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
@@ -84,5 +84,15 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject, 0.01f);
         }
 
+        if (other.gameObject.CompareTag("Box"))
+        {
+            CrateBehaviour crate = other.gameObject.GetComponent<CrateBehaviour>();
+            if (crate != null)
+            {
+                crate.TakeDamage(this.damage);
+            }
+            Destroy(gameObject, 0.01f);
+
+        }
     }
 }

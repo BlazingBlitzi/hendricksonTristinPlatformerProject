@@ -27,7 +27,7 @@ public class ElevatorController : MonoBehaviour
     }
     void StartElevator()
     {
-        if(Vector2.Distance(Player.position, Elevatorswitch.position)<0.5f && Input.GetKeyDown(KeyCode.F))
+        if(Vector2.Distance(Player.position, Elevatorswitch.position)<0.5f && Input.GetKeyDown("f"))
         {
             if(transform.position.y <= Downpos.position.y)
             {
@@ -39,7 +39,7 @@ public class ElevatorController : MonoBehaviour
             }
         }
 
-        if(!Iselevatordown)
+        if(Iselevatordown)
         {
             transform.position = Vector2.MoveTowards(transform.position, Upperpos.position, Speed * Time.deltaTime);
         }
