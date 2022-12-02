@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     //Dashing
-    private bool canDash = true;
+    [SerializeField] private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
@@ -209,7 +209,15 @@ public class PlayerMovement : MonoBehaviour
         isInvincible = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        if (transform.localScale.x < 0)
+        {
+            rb.velocity = new Vector2(-1 * dashingPower, 0f);
+        }
+        else
+        {
+            rb.velocity = new Vector2(1 * dashingPower, 0f);
+        }
+        
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;

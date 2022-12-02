@@ -8,15 +8,17 @@ public class ElevatorController : MonoBehaviour
     public Transform Elevatorswitch;
     public Transform Downpos;
     public Transform Upperpos;
+    public GameObject Elevator;
 
     public SpriteRenderer elevator;
 
     public float Speed;
     bool Iselevatordown;
+    public bool Switchhit;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -27,36 +29,37 @@ public class ElevatorController : MonoBehaviour
     }
     void StartElevator()
     {
-        if(Vector2.Distance(Player.position, Elevatorswitch.position)<0.5f && Input.GetKeyDown("f"))
+        if (Switchhit == true)
         {
-            if(transform.position.y <= Downpos.position.y)
+            if (transform.position.y <= Downpos.position.y)
             {
                 Iselevatordown = true;
             }
-            else if(transform.position.y >= Upperpos.position.y)
+            else if (transform.position.y >= Upperpos.position.y)
             {
                 Iselevatordown = false;
             }
-        }
 
-        if(Iselevatordown)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, Upperpos.position, Speed * Time.deltaTime);
+
+            if (Iselevatordown)
+            {
+                Elevator.transform.position = Vector2.MoveTowards(Elevator.transform.position, Upperpos.position, Speed * Time.deltaTime);
+            }
+            else
+            {
+                Elevator.transform.position = Vector2.MoveTowards(Elevator.transform.position, Downpos.position, Speed * Time.deltaTime);
+            }
         }
-        else
+    }
+        void DisplayColor()
         {
-            transform.position = Vector2.MoveTowards(transform.position, Downpos.position, Speed * Time.deltaTime);
+            if (transform.position.y <= Downpos.position.y || transform.position.y >= Upperpos.position.y)
+            {
+                elevator.color = Color.green;
+            }
+            else
+            {
+                elevator.color = Color.red;
+            }
         }
-    }    
-    void DisplayColor()
-    {
-        if(transform.position.y <= Downpos.position.y || transform.position.y >= Upperpos.position.y)
-        {
-            elevator.color = Color.green;
-        }
-        else
-        {
-            elevator.color = Color.red;
-        }
-    }    
-}
+    }

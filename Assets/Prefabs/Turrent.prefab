@@ -93,7 +93,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8098145027807881384}
-  - component: {fileID: 8098145027807881391}
   m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
@@ -116,22 +115,6 @@ Transform:
   m_Father: {fileID: 8098145027918473181}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.008}
---- !u!114 &8098145027807881391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8098145027807881385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb414218bee51204bb6bf6685c097ce8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firepoint: {fileID: 8098145027807881384}
-  bullet: {fileID: 4474559965603477669, guid: 544f4ec87e603434f9c92bf943ed86c4, type: 3}
-  startTimeBetween: 3
-  canSeePlayer: 0
 --- !u!1 &8098145027918473182
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,10 +333,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Range: 15
   Target: {fileID: 0}
-  AlarmLight: {fileID: 8098145027717134680}
   Gun: {fileID: 8098145027918473182}
-  Bullet: {fileID: 0}
+  bullet: {fileID: 0}
   FireRate: 0
-  ShootPoint: {fileID: 0}
+  Shootpoint: {fileID: 0}
   Force: 0
-  ShootSound: {fileID: 0}
