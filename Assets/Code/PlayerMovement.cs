@@ -253,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isInvincible)
         {
-            healthBar.SetHealth(currentHealth);
+            
            
             if (currentHealth <= 0)
             {
@@ -270,8 +270,8 @@ public class PlayerMovement : MonoBehaviour
                 currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
                 StartDamageAnimation();
             }
-            
-            
+
+            healthBar.SetHealth(currentHealth);
         }
     }
 
@@ -286,6 +286,7 @@ public class PlayerMovement : MonoBehaviour
             if (hitSideRight) hitForceX = -hitForceX;
             rb.velocity = Vector2.zero;
             rb.AddForce(new Vector2(hitForceX, hitForceY), ForceMode2D.Impulse);
+            animator.SetBool("isHit", true);
         }
     }
 
@@ -293,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isTakingDamage = false;
         isInvincible = false;
-        animator.Play("Player_Hit", -1, 0f);
+        animator.SetBool("isHit", false);
     }
 
     public void Defeat()

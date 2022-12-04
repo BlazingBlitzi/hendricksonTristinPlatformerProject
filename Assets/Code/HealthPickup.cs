@@ -23,6 +23,7 @@ public class HealthPickup : MonoBehaviour
             {
                 Destroy(gameObject);
                 playerHealth.currentHealth = playerHealth.currentHealth + healthBonus;
+                playerHealth.healthBar.SetHealth(playerHealth.currentHealth);
             }
         }
         
