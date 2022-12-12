@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CrateBehaviour : MonoBehaviour
 {
-    bool isInvincible;
+    bool IsInvincible;
 
 
     public AudioClip defeatSound;
@@ -31,12 +31,12 @@ public class CrateBehaviour : MonoBehaviour
 
     public void Invincible(bool invincibility)
     {
-        isInvincible = invincibility;
+        IsInvincible = invincibility;
     }
 
     public void TakeDamage(int damage)
     {
-        if (!isInvincible)
+        if (!IsInvincible)
         {
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);

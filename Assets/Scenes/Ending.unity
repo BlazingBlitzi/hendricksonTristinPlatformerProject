@@ -587,7 +587,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Objective Complete!
+  m_text: 'Objective Complete!
+
+
+    Thanks for Playing...'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 37cbf486e40249544823e63b9ce6a05d, type: 2}
   m_sharedMaterial: {fileID: 6581722109807281549, guid: 37cbf486e40249544823e63b9ce6a05d, type: 2}
@@ -621,7 +624,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -650,7 +653,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -142.76773, y: 0, z: -119.9082, w: 0}
+  m_margin: {x: -210.74069, y: -26.526031, z: -209.4336, w: -192.31375}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
